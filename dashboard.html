@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <title>Upgraded Dashboard | CampusConnect</title>
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --light-bg: #f8fafc;
+            --light-sidebar-bg: #ffffff;
+            --light-card-bg: #ffffff;
+            --light-text-primary: #0f172a;
+            --light-text-secondary: #475569;
+            --light-text-muted: #64748b;
+            --light-border: #e2e8f0;
+            --light-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+
+            --dark-bg: #0f172a;
+            --dark-sidebar-bg: #1e293b;
+            --dark-card-bg: #1e293b;
+            --dark-text-primary: #f8fafc;
+            --dark-text-secondary: #cbd5e1;
+            --dark-text-muted: #94a3b8;
+            --dark-border: #334155;
+            --dark-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+
+            --primary-blue: #3b82f6;
+            --primary-blue-light: #60a5fa;
+            --primary-blue-dark: #2563eb;
+            --accent-green: #22c55e;
+            --accent-amber: #f59e0b;
+
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            height: 100vh;
+            background-color: var(--bg, var(--light-bg));
+            color: var(--text-primary, var(--light-text-primary));
+            overflow: hidden;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        body[data-theme="dark"] {
+            --bg: var(--dark-bg);
+            --sidebar-bg: var(--dark-sidebar-bg);
+            --card-bg: var(--dark-card-bg);
+            --text-primary: var(--dark-text-primary);
+            --text-secondary: var(--dark-text-secondary);
+            --text-muted: var(--dark-text-muted);
+            --border: var(--dark-border);
+            --shadow: var(--dark-shadow);
+        }
+        
+        body[data-theme="light"] {
+            --bg: var(--light-bg);
+            --sidebar-bg: var(--light-sidebar-bg);
+            --card-bg: var(--light-card-bg);
+            --text-primary: var(--light-text-primary);
+            --text-secondary: var(--light-text-secondary);
+            --text-muted: var(--light-text-muted);
+            --border: var(--light-border);
+            --shadow: var(--light-shadow);
+        }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border, var(--light-border)); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted, var(--light-text-muted)); }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            background: var(--sidebar-bg, var(--light-sidebar-bg));
+            border-right: 1px solid var(--border, var(--light-border));
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            transition: width var(--transition-speed) ease, padding var(--transition-speed) ease;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+            padding: 24px 16px;
+        }
+
+        .sidebar.collapsed .logo,
+        .sidebar.collapsed .user-info div,
+        .sidebar.collapsed nav span,
+        .sidebar.collapsed .logout-btn span {
+            display: none;
+        }
+        .sidebar.collapsed .user-info, .sidebar.collapsed nav a { justify-content: center; }
+
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+
+        .logo { font-size: 22px; font-weight: 800; color: var(--primary-blue); white-space: nowrap; }
+
+        .sidebar-toggle-btn { background: none; border: none; color: var(--text-muted, var(--light-text-muted)); font-size: 20px; cursor: pointer; transition: transform var(--transition-speed), color var(--transition-speed); }
+        .sidebar-toggle-btn:hover { color: var(--primary-blue); transform: scale(1.1); }
+
+        .user-info { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; padding: 8px; border-radius: 8px; transition: box-shadow var(--transition-speed); }
+        .user-info:hover { box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+        .user-info img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-blue); }
+        .user-info div p { font-weight: 600; font-size: 14px; white-space: nowrap; }
+        .user-info small { font-size: 12px; color: var(--text-muted, var(--light-text-muted)); white-space: nowrap; }
+        
+        .sidebar-nav { flex-grow: 1; }
+        
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--text-secondary, var(--light-text-secondary));
+            border-radius: 8px;
+            margin-bottom: 4px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            position: relative; /* For active indicator */
+        }
+        
+        /* NEW: Active link indicator */
+        .sidebar nav a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 0;
+            width: 4px;
+            background-color: var(--primary-blue);
+            border-radius: 2px;
+            transition: height 0.2s ease;
+        }
+        .sidebar.collapsed nav a::before { display: none; }
+        
+        .sidebar nav a:hover { background: var(--primary-blue); color: #fff; }
+        .sidebar nav a:hover::before, .sidebar nav a.active::before { height: 60%; }
+        
+        .sidebar nav a.active { background: var(--primary-blue); color: #fff; font-weight: 600; }
+        .sidebar nav a i { font-size: 18px; width: 20px; text-align: center; }
+
+        .logout-btn { background: none; border: none; width: 100%; text-align: left; }
+        
+        /* --- MAIN CONTENT AREA --- */
+        .main-container { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; padding: 24px; }
+        .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-shrink: 0; }
+        .main-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary, var(--light-text-primary)); }
+        .header-actions { display: flex; align-items: center; gap: 16px; }
+
+        .search-wrapper { position: relative; }
+        .search-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted, var(--light-text-muted)); }
+        #search-input { padding: 10px 10px 10px 36px; border: 1px solid var(--border, var(--light-border)); border-radius: 8px; background: var(--card-bg, var(--light-card-bg)); color: var(--text-primary, var(--light-text-primary)); width: 250px; transition: all var(--transition-speed); }
+        #search-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); width: 300px; }
+
+        .action-btn { background: var(--card-bg, var(--light-card-bg)); border: 1px solid var(--border, var(--light-border)); font-size: 18px; width: 40px; height: 40px; border-radius: 50%; color: var(--text-muted, var(--light-text-muted)); cursor: pointer; transition: all var(--transition-speed) ease; }
+        .action-btn:hover { color: var(--primary-blue); transform: scale(1.1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); border-color: var(--primary-blue); }
+
+        .content-wrapper { display: flex; gap: 24px; flex-grow: 1; overflow: hidden; }
+        .main-content { flex-grow: 3; overflow-y: auto; padding-right: 12px; }
+        .right-sidebar { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 24px; padding-right: 12px; }
+
+        /* TABS & FILTERS */
+        .filters-and-tabs { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 16px; }
+        .tabs { display: flex; gap: 8px; }
+        .tab { padding: 8px 16px; cursor: pointer; font-weight: 600; font-size: 14px; color: var(--text-muted, var(--light-text-muted)); border-radius: 8px; transition: all 0.2s ease; position: relative; }
+        .tab:hover { color: var(--text-primary, var(--light-text-primary)); background: var(--card-bg, var(--light-card-bg)); }
+        .tab.active { color: var(--primary-blue); background: rgba(59, 130, 246, 0.1); }
+        .filters select { padding: 8px 12px; border: 1px solid var(--border, var(--light-border)); border-radius: 8px; background: var(--card-bg, var(--light-card-bg)); color: var(--text-secondary, var(--light-text-secondary)); margin-left: 8px; transition: transform 0.2s ease; }
+        .filters select:hover { transform: scale(1.05); }
+        .filters select:focus { outline: none; border-color: var(--primary-blue); }
+
+        /* CONTENT CARDS */
+        .cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg, var(--light-card-bg)); border: 1px solid var(--border, var(--light-border)); border-radius: 12px; padding: 20px; box-shadow: var(--shadow, var(--light-shadow)); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; cursor: pointer; opacity: 0; /* For animation */ }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary-blue); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08); }
+        .card-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+        .card-icon { width: 48px; height: 48px; flex-shrink: 0; border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--primary-blue); color: #fff; font-size: 24px; transition: transform 0.3s ease; }
+        .card:hover .card-icon { transform: scale(1.1) rotate(-10deg); }
+        .card-title { font-weight: 700; font-size: 16px; margin-bottom: 4px; color: var(--text-primary, var(--light-text-primary)); }
+        .card-meta { font-size: 13px; color: var(--text-muted, var(--light-text-muted)); }
+        .card-desc { font-size: 14px; color: var(--text-secondary, var(--light-text-secondary)); line-height: 1.6; margin-bottom: 16px; }
+        .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag { font-size: 12px; font-weight: 500; padding: 4px 10px; border-radius: 12px; transition: filter 0.2s ease; }
+        .card:hover .tag { filter: brightness(1.1); }
+        .tag.interest { background-color: rgba(59, 130, 246, 0.1); color: var(--primary-blue); }
+        .tag.skill { background-color: rgba(34, 197, 94, 0.1); color: var(--accent-green); }
+
+        /* RIGHT SIDEBAR WIDGETS */
+        .widget { background: var(--card-bg, var(--light-card-bg)); border: 1px solid var(--border, var(--light-border)); border-radius: 12px; padding: 20px; box-shadow: var(--shadow, var(--light-shadow)); }
+        .widget-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+        .stats-list .stat-item { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        .stat-item:last-child { margin-bottom: 0; }
+        .stat-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 500; }
+        .progress-bar { height: 8px; background-color: var(--border, var(--light-border)); border-radius: 4px; overflow: hidden; }
+        .progress { height: 100%; border-radius: 4px; width: 0; /* For animation */ transition: width 1s ease-out; }
+        .progress-bar.animate .progress { width: var(--progress-width, 0); } /* JS will set --progress-width */
+        .progress.blue { background-color: var(--primary-blue); }
+        .progress.green { background-color: var(--accent-green); }
+        .progress.amber { background-color: var(--accent-amber); }
+
+        .events-list .event-item { display: flex; gap: 16px; align-items: center; margin-bottom: 8px; padding: 8px; border-radius: 8px; transition: transform 0.2s ease, background-color 0.2s ease; }
+        .event-item:hover { transform: translateX(5px); background-color: rgba(59, 130, 246, 0.05); }
+        .event-item:last-child { margin-bottom: 0; }
+        .event-date { display: flex; flex-direction: column; align-items: center; font-weight: 600; background-color: rgba(59, 130, 246, 0.1); color: var(--primary-blue); border-radius: 8px; padding: 8px; font-size: 12px; width: 48px; flex-shrink: 0; }
+        .event-date span { font-size: 18px; line-height: 1; }
+        .event-details p { font-size: 14px; font-weight: 600; }
+        .event-details small { font-size: 12px; color: var(--text-muted, var(--light-text-muted)); }
+        
+        /* Entrance Animations */
+        .sidebar, .main-header, .main-content, .right-sidebar { opacity: 0; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) { .right-sidebar { display: none; } }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; flex-direction: row; align-items: center; padding: 12px; border-radius: 0; border-right: none; border-bottom: 1px solid var(--border, var(--light-border)); }
+            .sidebar.collapsed { width: 100%; }
+            .sidebar-header { margin-bottom: 0; flex-grow: 1; }
+            .user-info, .sidebar-nav, .logout-btn { display: none; }
+            .main-container { padding: 16px; }
+            .main-header h1 { font-size: 22px; }
+            .header-actions { gap: 8px; }
+            #search-input { width: 150px; }
+            #search-input:focus { width: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">CampusConnect</div>
+            <button class="sidebar-toggle-btn" id="sidebar-toggle"><i class="fa-solid fa-chevron-left"></i></button>
+        </div>
+
+        <div class="user-info">
+            <img src="https://images.pexels.com/photos/7862484/pexels-photo-7862484.jpeg" alt="User">
+            <div>
+                <p>Swapnil Ram</p>
+                <small>Student</small>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="active"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+            <a href="#"><i class="fa-solid fa-compass"></i> <span>Discover</span></a>
+            <a href="#"><i class="fa-solid fa-calendar-days"></i> <span>My Events</span></a>
+            <a href="profile.html"><i class="fa-solid fa-user"></i> <span>Profile</span></a>
+            
+          <a href="chat.html"><i class="fa-solid fa-comment"></i> <span>Messages</span></a>
+
+            
+        </nav>
+        
+        <button class="logout-btn sidebar-nav">
+             <a href="SignUP_Login.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span></a>
+        </button>
+    </div>
+
+    <div class="main-container">
+        <header class="main-header">
+            <h1>Dashboard</h1>
+            <div class="header-actions">
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search...">
+                </div>
+                <button class="action-btn" id="theme-toggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+                <button class="action-btn" title="Notifications"><i class="fa-solid fa-bell"></i></button>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <main class="main-content">
+                <div class="filters-and-tabs">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="club">Club Openings</div>
+                        <div class="tab" data-tab="events">Events</div>
+                        <div class="tab" data-tab="initiatives">Initiatives</div>
+                    </div>
+                    <div class="filters">
+                        <select id="filter-interest">
+                            <option value="">All Interests</option>
+                            <option value="tech">Tech</option>
+                            <option value="design">Design</option>
+                            <option value="business">Business</option>
+                        </select>
+                        <select id="filter-skills">
+                            <option value="">All Skills</option>
+                            <option value="frontend">Frontend</option>
+                            <option value="backend">Backend</option>
+                            <option value="uiux">UI/UX</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="tab-content"></div>
+            </main>
+
+            <aside class="right-sidebar">
+                <div class="widget">
+                    <h3 class="widget-title">Your Stats</h3>
+                    <div class="stats-list">
+                        <div class="stat-item">
+                            <div class="stat-header"><span>Clubs Joined</span><span>3 / 5</span></div>
+                            <div class="progress-bar"><div class="progress blue" data-progress="60%"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header"><span>Events Attending</span><span>2 / 4</span></div>
+                            <div class="progress-bar"><div class="progress amber" data-progress="50%"></div></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-header"><span>Skills Verified</span><span>8 / 10</span></div>
+                            <div class="progress-bar"><div class="progress green" data-progress="80%"></div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="widget">
+                    <h3 class="widget-title">Upcoming Events</h3>
+                    <div class="events-list">
+                        <div class="event-item">
+                            <div class="event-date">SEP<span>12</span></div>
+                            <div class="event-details">
+                                <p>Tech Meetup</p>
+                                <small>Hall 3, 4:00 PM</small>
+                            </div>
+                        </div>
+                         <div class="event-item">
+                            <div class="event-date">SEP<span>18</span></div>
+                            <div class="event-details">
+                                <p>Annual Hackathon</p>
+                                <small>Auditorium, 9:00 AM</small>
+                            </div>
+                        </div>
+                         <div class="event-item">
+                            <div class="event-date">SEP<span>25</span></div>
+                            <div class="event-details">
+                                <p>Design Workshop</p>
+                                <small>Lab 1, 1:00 PM</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll(".tab");
+            const tabContent = document.getElementById("tab-content");
+            const searchInput = document.getElementById("search-input");
+            const filterInterest = document.getElementById("filter-interest");
+            const filterSkills = document.getElementById("filter-skills");
+
+            const data = {
+                events: [
+                    { title: "Annual Tech Meetup", desc: "Join local tech enthusiasts for a day of networking and learning.", meta: "📅 12 Sep", interest: "tech", skills: "frontend", icon: "fa-solid fa-satellite-dish" },
+                    { title: "Design Thinking Workshop", desc: "Unlock your creative potential in this hands-on design workshop.", meta: "📅 15 Sep", interest: "design", skills: "uiux", icon: "fa-solid fa-palette" },
+                    { title: "Campus Hackathon 2025", desc: "A 48-hour coding marathon to build innovative solutions.", meta: "📅 18 Sep", interest: "tech", skills: "backend", icon: "fa-solid fa-code" },
+                    
+  {
+    title: "Annual Tech Meetup",
+    desc: "Join local tech enthusiasts for a day of networking and learning.",
+    meta: "📅 12 Sep",
+    interest: "tech",
+    skills: "frontend",
+    icon: "fa-solid fa-satellite-dish"
+  },
+  {
+    title: "Design Thinking Workshop",
+    desc: "Unlock your creative potential in this hands-on design workshop.",
+    meta: "📅 15 Sep",
+    interest: "design",
+    skills: "uiux",
+    icon: "fa-solid fa-palette"
+  },
+  {
+    title: "Campus Hackathon 2025",
+    desc: "A 48-hour coding marathon to build innovative solutions.",
+    meta: "📅 18 Sep",
+    interest: "tech",
+    skills: "backend",
+    icon: "fa-solid fa-code"
+  },
+  {
+    title: "AI & ML Seminar",
+    desc: "Explore real-world AI applications with leading researchers.",
+    meta: "📅 20 Sep",
+    interest: "tech",
+    skills: "machine learning",
+    icon: "fa-solid fa-robot"
+  },
+  {
+    title: "Cultural Fest Planning Meet",
+    desc: "Volunteers needed to organize the upcoming college cultural fest.",
+    meta: "📅 22 Sep",
+    interest: "management",
+    skills: "organizing",
+    icon: "fa-solid fa-people-group"
+  },
+  {
+    title: "Open Mic Night",
+    desc: "Showcase your talent in music, poetry, or stand-up comedy.",
+    meta: "📅 25 Sep",
+    interest: "arts",
+    skills: "performance",
+    icon: "fa-solid fa-microphone"
+  },
+  {
+    title: "Entrepreneurship Panel",
+    desc: "Hear startup stories and lessons from successful alumni founders.",
+    meta: "📅 27 Sep",
+    interest: "business",
+    skills: "entrepreneurship",
+    icon: "fa-solid fa-briefcase"
+  }
+                ],
+                club: [
+                    { title: "Frontend Developer Opening", desc: "The Web Dev Club is looking for a skilled React developer.", meta: "📅 Apply by 10 Sep", interest: "tech", skills: "frontend", icon: "fa-brands fa-react" },
+                    { title: "Backend Engineer Role", desc: "Join the AI Club to work on our core chatbot project with Python.", meta: "📅 Apply by 15 Sep", interest: "tech", skills: "backend", icon: "fa-brands fa-python" },
+                    { title: "UI/UX Designer Needed", desc: "The Design Hub needs a creative designer to lead our app redesign.", meta: "📅 Apply by 20 Sep", interest: "design", skills: "uiux", icon: "fa-solid fa-pen-nib" },
+                    { title: "Marketing Lead Position", desc: "The Entrepreneurship Club is seeking a marketing strategist.", meta: "📅 Apply by 22 Sep", interest: "business", skills: "marketing", icon: "fa-solid fa-bullhorn" },
+                    {
+    title: "Full Stack Developer Opportunity",
+    desc: "Tech Circle is seeking a versatile developer for an internal platform.",
+    meta: "📅 Apply by 25 Sep",
+    interest: "tech",
+    skills: "fullstack",
+    icon: "fa-solid fa-layer-group"
+  },
+  {
+    title: "Community Manager Opening",
+    desc: "The Innovation Club is looking for a proactive student to lead outreach.",
+    meta: "📅 Apply by 28 Sep",
+    interest: "social",
+    skills: "community",
+    icon: "fa-solid fa-users-rays"
+  },
+  {
+    title: "Data Analyst Intern Role",
+    desc: "The Research Society needs a student skilled in data visualization.",
+    meta: "📅 Apply by 30 Sep",
+    interest: "tech",
+    skills: "data",
+    icon: "fa-solid fa-chart-line"
+  },
+  {
+    title: "Content Writer Position",
+    desc: "The Literature Club is hiring a creative writer for blog and newsletter.",
+    meta: "📅 Apply by 3 Oct",
+    interest: "arts",
+    skills: "writing",
+    icon: "fa-solid fa-feather-pointed"
+  },
+  {
+    title: "Event Coordinator",
+    desc: "Join the Cultural Committee to plan college-wide events and fests.",
+    meta: "📅 Apply by 5 Oct",
+    interest: "management",
+    skills: "organizing",
+    icon: "fa-solid fa-calendar-check"
+  }
+                ],
+                initiatives: [
+                    { title: "Green Campus Initiative", desc: "Help us make our campus more sustainable. Join our weekly meetings.", meta: "🌱 Ongoing", interest: "social", skills: "community", icon: "fa-solid fa-leaf" },
+                    { title: "Peer Mentorship Program", desc: "Guide incoming freshmen and make a positive impact.", meta: "🤝 Sign-ups open", interest: "social", skills: "mentorship", icon: "fa-solid fa-handshake-angle" },
+                    {
+    title: "Mental Health Awareness Drive",
+    desc: "Join the Wellness Club in spreading awareness and support on campus.",
+    meta: "🧠 Ongoing",
+    interest: "social",
+    skills: "advocacy",
+    icon: "fa-solid fa-heart-pulse"
+  },
+  {
+    title: "Language Exchange Circle",
+    desc: "Practice new languages and help others improve through weekly meetups.",
+    meta: "🌍 Weekly sessions",
+    interest: "social",
+    skills: "communication",
+    icon: "fa-solid fa-language"
+  },
+  {
+    title: "Campus Clean-Up Campaign",
+    desc: "Be part of our monthly green drive and help maintain campus cleanliness.",
+    meta: "🧹 Next on 14 Sep",
+    interest: "social",
+    skills: "volunteering",
+    icon: "fa-solid fa-broom"
+  },
+  {
+    title: "Women in Tech Mentorship",
+    desc: "Support female students in tech through guidance and regular check-ins.",
+    meta: "👩‍💻 Program starts 20 Sep",
+    interest: "social",
+    skills: "mentorship",
+    icon: "fa-solid fa-person-chalkboard"
+  }
+                ]
+            };
+
+            let currentTab = "club";
+
+            function renderTab(tab) {
+                if (!tabContent) return;
+                let items = data[tab] || [];
+
+                const searchText = searchInput.value.toLowerCase();
+                const interestFilter = filterInterest.value;
+                const skillsFilter = filterSkills.value;
+
+                const filteredItems = items.filter(item => {
+                    const matchesSearch = item.title.toLowerCase().includes(searchText) || item.desc.toLowerCase().includes(searchText);
+                    const matchesInterest = interestFilter ? item.interest === interestFilter : true;
+                    const matchesSkills = skillsFilter ? item.skills === skillsFilter : true;
+                    return matchesSearch && matchesInterest && matchesSkills;
+                });
+
+                let html = '<div class="cards-container">';
+                if (filteredItems.length === 0) {
+                     html += `<p style="color: var(--text-muted);">No items match your criteria.</p>`;
+                } else {
+                    filteredItems.forEach(item => {
+                        html += `
+                        <div class="card" data-item='${JSON.stringify(item)}'>
+                            <div class="card-header">
+                                <div class="card-icon"><i class="${item.icon}"></i></div>
+                                <div>
+                                    <div class="card-title">${item.title}</div>
+                                    <div class="card-meta">${item.meta}</div>
+                                </div>
+                            </div>
+                            <p class="card-desc">${item.desc}</p>
+                            <div class="card-tags">
+                                <span class="tag interest">${item.interest}</span>
+                                <span class="tag skill">${item.skills}</span>
+                            </div>
+                        </div>`;
+                    });
+                }
+                html += '</div>';
+                tabContent.innerHTML = html;
+
+                anime({ targets: '.card', translateY: [20, 0], opacity: [0, 1], delay: anime.stagger(100), easing: 'easeOutQuad' });
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener("click", () => {
+                    tabs.forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                    currentTab = tab.dataset.tab;
+                    renderTab(currentTab);
+                });
+            });
+
+            searchInput.addEventListener("input", () => renderTab(currentTab));
+            filterInterest.addEventListener("change", () => renderTab(currentTab));
+            filterSkills.addEventListener("change", () => renderTab(currentTab));
+
+            // --- Sidebar Toggle ---
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            sidebarToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
+                sidebarToggle.querySelector('i').classList.toggle('fa-chevron-right');
+                sidebarToggle.querySelector('i').classList.toggle('fa-chevron-left');
+            });
+
+            // --- Theme Toggle ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme) {
+                body.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark') themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                if (body.getAttribute('data-theme') === 'dark') {
+                    body.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+                } else {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+                }
+            });
+
+            // --- Animated Progress Bars ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressBar = entry.target;
+                        const progress = progressBar.querySelector('.progress');
+                        progress.style.setProperty('--progress-width', progress.dataset.progress);
+                        progressBar.classList.add('animate');
+                        observer.unobserve(progressBar);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            document.querySelectorAll('.progress-bar').forEach(bar => observer.observe(bar));
+
+            // --- Entrance Animation ---
+            function initEntranceAnimation() {
+                const tl = anime.timeline({
+                    easing: 'easeOutExpo',
+                });
+
+                tl.add({
+                    targets: '.sidebar',
+                    translateX: ['-100%', 0],
+                    opacity: [0, 1],
+                    duration: 800
+                }).add({
+                    targets: '.main-header',
+                    translateY: [-50, 0],
+                    opacity: [0, 1],
+                    duration: 600
+                }, '-=400').add({
+                    targets: '.main-content, .right-sidebar',
+                    translateY: [20, 0],
+                    opacity: [0, 1],
+                    duration: 700,
+                    delay: anime.stagger(200)
+                }, '-=400');
+            }
+
+            // Initial render & Animations
+            initEntranceAnimation();
+            renderTab(currentTab);
+        });
+    </script>
+</body>
+</html>

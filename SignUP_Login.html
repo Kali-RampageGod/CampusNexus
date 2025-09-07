@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CampusNexus Auth</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b, #3b0764);
+      background-size: 400% 400%;
+      animation: gradientMove 20s ease infinite;
+      color: white;
+      overflow: hidden;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    canvas#bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+    }
+    .container {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+      padding: 2rem 4rem;
+    }
+    .left { flex: 1; padding-right: 2rem; }
+    .left h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .left p { opacity: 0.8; margin-bottom: 2rem; }
+    .features { list-style: none; }
+    .features li {
+      margin-bottom: 0.5rem;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .features li::before {
+      content: "•";
+      color: #22d3ee;
+      position: absolute;
+      left: 0;
+    }
+    .form-card {
+      flex: 1;
+      max-width: 420px;
+      padding: 2rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+    }
+    .form { display: none; animation: fadeIn 0.6s ease; }
+    .form.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form h2 { text-align: center; margin-bottom: 1rem; }
+    .form p { text-align: center; font-size: 0.9rem; margin-bottom: 1.5rem; opacity: 0.8; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; font-size: 0.85rem; margin-bottom: 0.4rem; }
+    input, select {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+    input:focus, select:focus { outline: 2px solid #22d3ee; }
+    .btn {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(to right, #22d3ee, #3b82f6);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .switch { text-align: center; margin-top: 1rem; }
+    .switch a {
+      color: #22d3ee;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    @media(max-width: 900px) {
+      .container { flex-direction: column; text-align: center; }
+      .left { padding: 0; margin-bottom: 2rem; }
+      .form-card { width: 100%; }
+    }
+    select {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 0.95rem;
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='292.4' height='292.4'%3E%3Cpath fill='%23ffffff' d='M287 69.4L277.3 59.7c-4.7-4.7-12.3-4.7-17 0L146.2 173.8 32.1 59.7c-4.7-4.7-12.3-4.7-17 0L5.4 69.4c-4.7 4.7-4.7 12.3 0 17l132.8 132.9c4.7 4.7 12.3 4.7 17 0l132.9-132.9c4.7-4.7 4.7-12.3 0-17z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem top 50%;
+  background-size: 0.65rem auto;
+}
+
+select option {
+  background-color: #1e293b; /* dark background */
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+border-radius: 100px;
+}
+select:hover, select:focus {
+  outline: 2px solid #22d3ee;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <div class="container">
+    <!-- Left Section -->
+    <div class="left">
+      <h1>Connect. Collaborate. Create.</h1>
+      <p>Join a community of innovative students building the future together</p>
+      <img src="theme2.png" height="200" width="200" style="position: relative; left: 60px;;">
+      <ul class="features">
+
+        <li>Connect with like-minded students</li>
+        <li>Collaborate on innovative projects</li>
+        <li>Build your professional network</li>
+      </ul>
+    </div>
+
+    <!-- Right Section (Form) -->
+    <div class="form-card">
+      <!-- Signup Form -->
+      <form id="signupForm" class="form active">
+        <h2>Create Your Account</h2>
+        <p>Join the elite <b>CampusNexus</b> community</p>
+
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" name="fullname" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label>College Name *</label>
+          <input type="text" name="college" required>
+        </div>
+        <div class="form-group">
+          <label>Role *</label>
+          <select name="role" required>
+            <option value="">Select Role</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Password *</label>
+          <input type="password" id="signupPassword" name="password" required>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password *</label>
+          <input type="password" id="confirmPassword" name="confirm_password" required>
+        </div>
+        <button type="submit" class="btn">Join CampusNexus</button>
+
+        <div class="switch">
+          Already part of our community? <a onclick="toggleForms()">Sign In</a>
+        </div>
+      </form>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="form">
+        <h2>Welcome Back</h2>
+        <p>Login to <b>CampusNexus</b></p>
+
+        <div class="form-group">
+          <label>Email Address *</label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label>Password *</label>
+          <input type="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label>Role *</label>
+          <select name="role" required>
+            <option value="">Select Role</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">Login</button>
+
+        <div class="switch">
+          New here? <a onclick="toggleForms()">Sign Up</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Particle Background
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = 2;
+        this.dx = (Math.random() - 0.5) * 0.5;
+        this.dy = (Math.random() - 0.5) * 0.5;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "#22d3ee";
+        ctx.fill();
+      }
+      update() {
+        this.x += this.dx;
+        this.y += this.dy;
+        if (this.x < 0 || this.x > canvas.width) this.dx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.dy *= -1;
+        this.draw();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < 100; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function drawLines() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          let dx = particles[i].x - particles[j].x;
+          let dy = particles[i].y - particles[j].y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = "rgba(34, 211, 238, 0.2)";
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => p.update());
+      drawLines();
+      requestAnimationFrame(animate);
+    }
+
+    initParticles();
+    animate();
+
+    // Toggle Forms
+    function toggleForms() {
+      document.getElementById("signupForm").classList.toggle("active");
+      document.getElementById("loginForm").classList.toggle("active");
+    }
+
+    // Static Signup Handler
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const password = form.password.value;
+      const confirmPassword = form.confirm_password.value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      alert("Signup successful! You can now login.");
+      toggleForms();
+    });
+
+    // Static Login Handler
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const email = form.email.value;
+      const password = form.password.value;
+     const role=form.role.value;
+     console.log(role);
+      // Static demo credentials
+      const demoEmail = "user@example.com";
+      const demoPassword = "123456";
+
+      if (email === demoEmail && password === demoPassword&&role==="student") {
+        alert("Login successful!");
+        window.location.href="dashboard.html";
+        // Redirect or load dashboard here
+      } else if(email === demoEmail && password === demoPassword&&role==="teacher"){
+window.location.href="Teacherdashboard.html";
+      }
+      else {
+        alert("Invalid email or password.");
+      }
+    });
+  </script>
+</body>
+</html>

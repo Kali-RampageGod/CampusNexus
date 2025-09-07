@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Teacher Dashboard | CampusConnect</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <style>
+    /* root and base styles (same as your original layout) */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    :root {
+      /* variables */ /* light and dark themes */
+      --light-bg: #f8fafc;
+      --light-sidebar-bg: #ffffff;
+      --light-card-bg: #ffffff;
+      --light-text-primary: #0f172a;
+      --light-text-secondary: #475569;
+      --light-text-muted: #64748b;
+      --light-border: #e2e8f0;
+      --light-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+
+      --dark-bg: #0f172a;
+      --dark-sidebar-bg: #1e293b;
+      --dark-card-bg: #1e293b;
+      --dark-text-primary: #f8fafc;
+      --dark-text-secondary: #cbd5e1;
+      --dark-text-muted: #94a3b8;
+      --dark-border: #334155;
+      --dark-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+
+      --primary-blue: #3b82f6;
+      --primary-blue-light: #60a5fa;
+      --primary-blue-dark: #2563eb;
+      --accent-green: #22c55e;
+      --accent-amber: #f59e0b;
+
+      --transition-speed: 0.3s;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      display: flex;
+      height: 100vh;
+      background-color: var(--bg, var(--light-bg));
+      color: var(--text-primary, var(--light-text-primary));
+      overflow: hidden;
+      transition: background-color var(--transition-speed),
+        color var(--transition-speed);
+    }
+    body[data-theme="dark"] {
+      --bg: var(--dark-bg);
+      --sidebar-bg: var(--dark-sidebar-bg);
+      --card-bg: var(--dark-card-bg);
+      --text-primary: var(--dark-text-primary);
+      --text-secondary: var(--dark-text-secondary);
+      --text-muted: var(--dark-text-muted);
+      --border: var(--dark-border);
+      --shadow: var(--dark-shadow);
+    }
+    body[data-theme="light"] {
+      --bg: var(--light-bg);
+      --sidebar-bg: var(--light-sidebar-bg);
+      --card-bg: var(--light-card-bg);
+      --text-primary: var(--light-text-primary);
+      --text-secondary: var(--light-text-secondary);
+      --text-muted: var(--light-text-muted);
+      --border: var(--light-border);
+      --shadow: var(--light-shadow);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border, var(--light-border));
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted, var(--light-text-muted));
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      background: var(--sidebar-bg, var(--light-sidebar-bg));
+      border-right: 1px solid var(--border, var(--light-border));
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      transition: width var(--transition-speed) ease,
+        padding var(--transition-speed) ease;
+    }
+    .sidebar.collapsed {
+      width: 80px;
+      padding: 24px 16px;
+    }
+    .sidebar.collapsed .logo,
+    .sidebar.collapsed .user-info div,
+    .sidebar.collapsed nav span,
+    .sidebar.collapsed .logout-btn span {
+      display: none;
+    }
+    .sidebar.collapsed .user-info,
+    .sidebar.collapsed nav a {
+      justify-content: center;
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary-blue);
+      white-space: nowrap;
+    }
+
+    .sidebar-toggle-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted, var(--light-text-muted));
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform var(--transition-speed),
+        color var(--transition-speed);
+    }
+    .sidebar-toggle-btn:hover {
+      color: var(--primary-blue);
+      transform: scale(1.1);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      padding: 8px;
+      border-radius: 8px;
+      transition: box-shadow var(--transition-speed);
+    }
+    .user-info:hover {
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+    }
+    .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-blue);
+    }
+    .user-info div p {
+      font-weight: 600;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .user-info small {
+      font-size: 12px;
+      color: var(--text-muted, var(--light-text-muted));
+      white-space: nowrap;
+    }
+    .sidebar-nav {
+      flex-grow: 1;
+    }
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text-secondary, var(--light-text-secondary));
+      border-radius: 8px;
+      margin-bottom: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      position: relative;
+    }
+    .sidebar nav a::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 0;
+      width: 4px;
+      background-color: var(--primary-blue);
+      border-radius: 2px;
+      transition: height 0.2s ease;
+    }
+    .sidebar.collapsed nav a::before {
+      display: none;
+    }
+    .sidebar nav a:hover {
+      background: var(--primary-blue);
+      color: #fff;
+    }
+    .sidebar nav a:hover::before,
+    .sidebar nav a.active::before {
+      height: 60%;
+    }
+    .sidebar nav a.active {
+      background: var(--primary-blue);
+      color: #fff;
+      font-weight: 600;
+    }
+    .sidebar nav a i {
+      font-size: 18px;
+      width: 20px;
+      text-align: center;
+    }
+    .logout-btn {
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    /* Main area */
+    .main-container {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 24px;
+    }
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+    .main-header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-primary, var(--light-text-primary));
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .search-wrapper {
+      position: relative;
+    }
+    .search-wrapper i {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted, var(--light-text-muted));
+    }
+    #search-input {
+      padding: 10px 10px 10px 36px;
+      border: 1px solid var(--border, var(--light-border));
+      border-radius: 8px;
+      background: var(--card-bg, var(--light-card-bg));
+      color: var(--text-primary, var(--light-text-primary));
+      width: 250px;
+      transition: all var(--transition-speed);
+    }
+    #search-input:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      width: 300px;
+    }
+    .action-btn {
+      background: var(--card-bg, var(--light-card-bg));
+      border: 1px solid var(--border, var(--light-border));
+      font-size: 18px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: var(--text-muted, var(--light-text-muted));
+      cursor: pointer;
+      transition: all var(--transition-speed) ease;
+    }
+    .action-btn:hover {
+      color: var(--primary-blue);
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+      border-color: var(--primary-blue);
+    }
+
+    /* Tabs & filters */
+    .filters-and-tabs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+    }
+    .tab {
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-muted, var(--light-text-muted));
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .tab:hover {
+      color: var(--text-primary, var(--light-text-primary));
+      background: var(--card-bg, var(--light-card-bg));
+    }
+    .tab.active {
+      color: var(--primary-blue);
+      background: rgba(59, 130, 246, 0.1);
+    }
+    .filters select {
+      padding: 8px 12px;
+      border: 1px solid var(--border, var(--light-border));
+      border-radius: 8px;
+      background: var(--card-bg, var(--light-card-bg));
+      color: var(--text-secondary, var(--light-text-secondary));
+      margin-left: 8px;
+      transition: transform 0.2s ease;
+    }
+    .filters select:hover {
+      transform: scale(1.05);
+    }
+    .filters select:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+    }
+
+    /* Cards container */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card-bg, var(--light-card-bg));
+      border: 1px solid var(--border, var(--light-border));
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow, var(--light-shadow));
+      transition: transform 0.2s ease, box-shadow 0.2s ease,
+        border-color 0.2s ease;
+      cursor: pointer;
+      opacity: 0;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-blue);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08),
+        0 4px 6px -4px rgb(0 0 0 / 0.08);
+    }
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-blue);
+      color: #fff;
+      font-size: 24px;
+      transition: transform 0.3s ease;
+    }
+    .card:hover .card-icon {
+      transform: scale(1.1) rotate(-10deg);
+    }
+    .card-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+      color: var(--text-primary, var(--light-text-primary));
+    }
+    .card-meta {
+      font-size: 13px;
+      color: var(--text-muted, var(--light-text-muted));
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-secondary, var(--light-text-secondary));
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 12px;
+      transition: filter 0.2s ease;
+    }
+    .card:hover .tag {
+      filter: brightness(1.1);
+    }
+    .tag.interest {
+      background-color: rgba(59, 130, 246, 0.1);
+      color: var(--primary-blue);
+    }
+    .tag.skill {
+      background-color: rgba(34, 197, 94, 0.1);
+      color: var(--accent-green);
+    }
+
+    /* Right sidebar */
+    .right-sidebar {
+      flex-grow: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-right: 12px;
+    }
+    .widget {
+      background: var(--card-bg, var(--light-card-bg));
+      border: 1px solid var(--border, var(--light-border));
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow, var(--light-shadow));
+    }
+    .widget-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .stats-list .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .stat-item:last-child {
+      margin-bottom: 0;
+    }
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .progress-bar {
+      height: 8px;
+      background-color: var(--border, var(--light-border));
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-bar.animate .progress {
+      width: var(--progress-width, 0);
+    }
+    .progress {
+      height: 100%;
+      border-radius: 4px;
+      width: 0;
+      transition: width 1s ease-out;
+    }
+    .progress.blue {
+      background-color: var(--primary-blue);
+    }
+    .progress.green {
+      background-color: var(--accent-green);
+    }
+    .progress.amber {
+      background-color: var(--accent-amber);
+    }
+    .events-list .event-item {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 8px;
+      border-radius: 8px;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .event-item:hover {
+      transform: translateX(5px);
+      background-color: rgba(59, 130, 246, 0.05);
+    }
+    .event-item:last-child {
+      margin-bottom: 0;
+    }
+    .event-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 600;
+      background-color: rgba(59, 130, 246, 0.1);
+      color: var(--primary-blue);
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 12px;
+      width: 48px;
+      flex-shrink: 0;
+    }
+    .event-date span {
+      font-size: 18px;
+      line-height: 1;
+    }
+    .event-details p {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .event-details small {
+      font-size: 12px;
+      color: var(--text-muted, var(--light-text-muted));
+    }
+
+    /* Entrance animations */
+    .sidebar,
+    .main-header,
+    .main-content,
+    .right-sidebar {
+      opacity: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .right-sidebar {
+        display: none;
+      }
+    }
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px;
+        border-radius: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border, var(--light-border));
+      }
+      .sidebar.collapsed {
+        width: 100%;
+      }
+      .sidebar-header {
+        margin-bottom: 0;
+        flex-grow: 1;
+      }
+      .user-info,
+      .sidebar-nav,
+      .logout-btn {
+        display: none;
+      }
+      .main-container {
+        padding: 16px;
+      }
+      .main-header h1 {
+        font-size: 22px;
+      }
+      .header-actions {
+        gap: 8px;
+      }
+      #search-input {
+        width: 150px;
+      }
+      #search-input:focus {
+        width: 180px;
+      }
+    }
+
+    /* Floating Action Button */
+    .fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--primary-blue);
+      color: white;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 16px rgba(59, 130, 246, 0.4);
+      cursor: pointer;
+      border: none;
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+    }
+    .fab:hover {
+      background-color: var(--primary-blue-dark);
+    }
+
+    /* Modal Form */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .modal {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 12px;
+      width: 400px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .modal h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    .modal input,
+    .modal textarea,
+    .modal select {
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text-primary);
+    }
+    .modal textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+    .modal-actions button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      font-weight: 600;
+    }
+    #submit-post {
+      background-color: var(--primary-blue);
+      color: white;
+    }
+    #close-modal {
+      background-color: var(--border);
+      color: var(--text-primary);
+    }
+    .hidden {
+      display: none;
+    }
+    /* Accept/Reject Buttons */
+    .accept-btn {
+      background-color: var(--accent-green);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .reject-btn {
+      background-color: var(--accent-amber);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">CampusConnect</div>
+      <button class="sidebar-toggle-btn" id="sidebar-toggle">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+    </div>
+    <div class="user-info">
+      <img src="https://i.pravatar.cc/40?u=teacher" alt="Teacher" />
+      <div>
+        <p>Prof. Jane Smith</p>
+        <small>Teacher</small>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="active"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+      <a href="#cards-container" id="showRequestsBtn">
+  <i class="fa-solid fa-clock-question"></i>
+  <span>Requests</span>
+</a>
+
+<a href="#" id="showAddPostBtn">
+  <i class="fa-solid fa-plus"></i>
+  <span>Add Post</span>
+</a>
+      <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+    </nav>
+    <button class="logout-btn sidebar-nav">
+      <a href="SignUP_Login.html"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Logout</span></a>
+    </button>
+  </div>
+
+  <div class="main-container">
+    <header class="main-header">
+      <h1>Teacher Dashboard</h1>
+      <div class="header-actions">
+        <div class="search-wrapper">
+          <i class="fa-solid fa-search"></i>
+          <input type="text" id="search-input" placeholder="Search..." />
+        </div>
+        <button class="action-btn" id="theme-toggle" title="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="filters-and-tabs">
+      <div class="tabs">
+        <div class="tab active" id="tab-active" data-tab="requests">Requests</div>
+        <div class="tab" data-tab="club">Post Club Opening</div>
+        <div class="tab" data-tab="events">Post Event</div>
+      </div>
+    </div>
+
+    <main class="main-content">
+      <div id="tab-content"></div>
+    </main>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button class="fab" id="fab" title="Create New">
+    <i class="fa-solid fa-plus"></i>
+  </button>
+
+  <!-- Modal Overlay -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <h2>Create New Post</h2>
+      <select id="post-type">
+        <option value="events">Event</option>
+        <option value="club">Club Opening</option>
+      </select>
+      <input type="text" id="post-title" placeholder="Title" />
+      <textarea id="post-desc" placeholder="Description"></textarea>
+      <input type="text" id="post-meta" placeholder="Meta info (e.g. 📅 15 Sep)" />
+      <select id="post-interest">
+        <option value="">Interest</option>
+        <option value="tech">Tech</option>
+        <option value="design">Design</option>
+        <option value="business">Business</option>
+        <option value="social">Social</option>
+      </select>
+      <select id="post-skills">
+        <option value="">Skill</option>
+        <option value="frontend">Frontend</option>
+        <option value="backend">Backend</option>
+        <option value="uiux">UI/UX</option>
+        <option value="community">Community</option>
+      </select>
+      <input type="text" id="post-icon" placeholder="Icon class (e.g. fa-solid fa-code)" />
+      <div class="modal-actions">
+        <button id="submit-post">Submit</button>
+        <button id="close-modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll(".tab");
+    const tabContent = document.getElementById("tab-content");
+    const searchInput = document.getElementById("search-input");
+    const fab = document.getElementById("fab");
+    const modalOverlay = document.getElementById("modal-overlay");
+    const closeModal = document.getElementById("close-modal");
+    const submitPost = document.getElementById("submit-post");
+    const sidebar = document.querySelector(".sidebar");
+    const sidebarToggle = document.getElementById("sidebar-toggle");
+    const themeToggle = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    const data = {
+      requests: [
+        {
+          title: "Photography Club Creation",
+          desc: "Student John Doe wants to start a Photography Club focused on campus tours.",
+          meta: "Requested by John Doe",
+          interest: "design",
+          skills: "community",
+          icon: "fa-solid fa-camera"
+        },
+        {
+          title: "Coding Initiative",
+          desc: "Student Sarah Lee wants to start peer-to-peer coding sessions.",
+          meta: "Requested by Sarah Lee",
+          interest: "tech",
+          skills: "backend",
+          icon: "fa-solid fa-code"
+        }
+      ],
+      events: [
+        {
+          title: "Faculty Meet & Greet",
+          desc: "An event for faculty to meet the newly enrolled batch.",
+          meta: "📅 1 Oct",
+          interest: "social",
+          skills: "community",
+          icon: "fa-solid fa-handshake-angle"
+        }
+      ],
+      club: [
+        {
+          title: "Research Club Hiring",
+          desc: "Looking for motivated student researchers to join the club.",
+          meta: "📅 Apply by 30 Sep",
+          interest: "tech",
+          skills: "backend",
+          icon: "fa-solid fa-microscope"
+        }
+      ]
+    };
+
+    let currentTab = "requests";
+
+    function renderTab(tab) {
+      currentTab = tab;
+      let items = data[tab] || [];
+
+      const query = searchInput.value.trim().toLowerCase();
+      if (query !== "") {
+        items = items.filter(
+          (it) =>
+            it.title.toLowerCase().includes(query) ||
+            it.desc.toLowerCase().includes(query)
+        );
+      }
+
+      let html = '<id="cards-container" div class="cards-container">';
+      if (items.length === 0) {
+        html += `<p style="color: var(--text-muted);">No items to show.</p>`;
+      } else {
+        items.forEach((item, idx) => {
+          html += `
+            <div class="card" data-index="${idx}">
+              <div class="card-header">
+                <div class="card-icon"><i class="${item.icon}"></i></div>
+                <div>
+                  <div class="card-title">${item.title}</div>
+                  <div class="card-meta">${item.meta}</div>
+                </div>
+              </div>
+              <p class="card-desc">${item.desc}</p>
+              <div class="card-tags">
+                <span class="tag interest">${item.interest}</span>
+                <span class="tag skill">${item.skills}</span>
+              </div>
+              ${
+                tab === "requests"
+                  ? `<div style="margin-top: 12px; display: flex; gap: 8px;">
+                     <button class="accept-btn">Accept</button>
+                     <button class="reject-btn">Reject</button>
+                   </div>`
+                  : ""
+              }
+            </div>`;
+        });
+      }
+      html += "</div>";
+      tabContent.innerHTML = html;
+
+      // Entrance animation
+      anime({
+        targets: ".card",
+        translateY: [20, 0],
+        opacity: [0, 1],
+        delay: anime.stagger(100),
+        easing: "easeOutQuad"
+      });
+
+      if (tab === "requests") {
+        document.querySelectorAll(".accept-btn").forEach((btn, i) =>
+          btn.addEventListener("click", () => {
+            data.requests.splice(i, 1);
+            renderTab("requests");
+          })
+        );
+        document.querySelectorAll(".reject-btn").forEach((btn, i) =>
+          btn.addEventListener("click", () => {
+            data.requests.splice(i, 1);
+            renderTab("requests");
+          })
+        );
+      }
+    }
+
+    tabs.forEach((tabEl) =>
+      tabEl.addEventListener("click", () => {
+        tabs.forEach((t) => t.classList.remove("active"));
+        tabEl.classList.add("active");
+        renderTab(tabEl.dataset.tab);
+      })
+    );
+
+    searchInput.addEventListener("input", () => renderTab(currentTab));
+
+    // Sidebar toggle
+    sidebarToggle.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+      sidebarToggle
+        .querySelector("i")
+        .classList.toggle("fa-chevron-right");
+      sidebarToggle
+        .querySelector("i")
+        .classList.toggle("fa-chevron-left");
+    });
+
+    // Theme toggle
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      body.setAttribute("data-theme", savedTheme);
+      if (savedTheme === "dark") {
+        themeToggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+      }
+    }
+    themeToggle.addEventListener("click", () => {
+      if (body.getAttribute("data-theme") === "dark") {
+        body.setAttribute("data-theme", "light");
+        themeToggle.querySelector("i").classList.replace("fa-sun", "fa-moon");
+        localStorage.setItem("theme", "light");
+      } else {
+        body.setAttribute("data-theme", "dark");
+        themeToggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+        localStorage.setItem("theme", "dark");
+      }
+    });
+
+    // Fab & modal
+    fab.addEventListener("click", () => modalOverlay.classList.remove("hidden"));
+    closeModal.addEventListener("click", () => modalOverlay.classList.add("hidden"));
+
+    submitPost.addEventListener("click", () => {
+      const type = document.getElementById("post-type").value;
+      const title = document.getElementById("post-title").value.trim();
+      const desc = document.getElementById("post-desc").value.trim();
+      const meta = document.getElementById("post-meta").value.trim();
+      const interest = document.getElementById("post-interest").value;
+      const skills = document.getElementById("post-skills").value;
+      const icon = document.getElementById("post-icon").value.trim();
+
+      if (!title || !desc || !meta || !interest || !skills || !icon) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      data[type].unshift({ title, desc, meta, interest, skills, icon });
+      modalOverlay.classList.add("hidden");
+      // Reset fields
+      document.querySelectorAll("#modal-overlay input, #modal-overlay textarea, #modal-overlay select").forEach(
+        (el) => (el.value = "")
+      );
+
+      const targetTab = type === "events" ? "events" : "club";
+      document
+        .querySelector(`.tab[data-tab="${targetTab}"]`)
+        .click();
+    });
+
+    // Entrance animation
+    function initEntranceAnimations() {
+      anime
+        .timeline({ easing: "easeOutExpo" })
+        .add({
+          targets: ".sidebar",
+          translateX: ["-100%", 0],
+          opacity: [0, 1],
+          duration: 800
+        })
+        .add(
+          {
+            targets: ".main-header",
+            translateY: [-50, 0],
+            opacity: [0, 1],
+            duration: 600
+          },
+          "-=400"
+        )
+        .add(
+          {
+            targets: ".main-content",
+            translateY: [20, 0],
+            opacity: [0, 1],
+            duration: 700,
+            delay: anime.stagger(200)
+          },
+          "-=400"
+        );
+    }
+
+    initEntranceAnimations();
+    renderTab(currentTab);
+
+   
+  const showRequestsBtn = document.getElementById('showRequestsBtn');
+  const showAddPostBtn = document.getElementById('showAddPostBtn');
+
+  const requestSection = document.getElementById('cards-container');
+  const addPostSection = document.getElementById('add-post-container');
+
+  showRequestsBtn.addEventListener('click', function (e) {
+    e.preventDefault(); // Prevent jump
+    requestSection.style.display = 'block';
+    addPostSection.style.display = 'none';
+  });
+
+  showAddPostBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    requestSection.style.display = 'none';
+    addPostSection.style.display = 'block';
+  });
+
+
+
+  </script>
+</body>
+</html>

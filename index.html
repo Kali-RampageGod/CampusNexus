@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Connect | Discover. Connect. Grow.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <style>
+        #navbar.scrolled {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
+        }
+        /* Initial state for scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <div class="min-h-screen">
+      <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+              <div class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                CampusNexus
+              </div>
+            </div>
+            <div class="hidden md:block">
+              <div class="ml-10 flex items-baseline space-x-8">
+                <a href="#" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                <a href="#" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Features</a>
+                <a href="#" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">For Students</a>
+                <a href="#" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">For Clubs</a>
+                <a href="#" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">AI Features</a>
+                <a href="#" class="text-gray-900 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors">Contact</a>
+              </div>
+            </div>
+            <div>
+              <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors" onclick="window.location.href='SignUP_Login.html'">
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <section class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 overflow-hidden">
+        <div class="absolute inset-0">
+          <div class="floating-shape absolute top-20 left-20 w-20 h-20 bg-blue-400/20 rounded-full"></div>
+          <div class="floating-shape absolute top-40 right-32 w-16 h-16 bg-purple-400/20 rounded-lg rotate-45"></div>
+          <div class="floating-shape absolute bottom-32 left-1/4 w-24 h-24 bg-pink-400/20 rounded-full"></div>
+          <div class="floating-shape absolute bottom-20 right-20 w-18 h-18 bg-cyan-400/20 rounded-lg"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+          <h1 class="hero-title text-5xl md:text-7xl font-bold text-gray-900 mb-6 opacity-0">
+            <span class="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Discover. Connect. Grow.
+            </span>
+          </h1>
+          <p class="hero-subtitle text-xl md:text-2xl text-gray-600 mb-8 opacity-0 max-w-2xl mx-auto">
+            Smart platform for Students, Clubs, and Faculty Initiatives.
+          </p>
+          <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center opacity-0">
+            <button class="glow-button bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-lg transition-all duration-300"onclick="window.location.href='SignUP_Login.html'">
+              Join as Student
+            </button>
+            <button class="glow-button bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-lg transition-all duration-300" onclick="window.location.href='SignUP_Login.html'">
+              Join as Club
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16 animate-on-scroll opacity-0">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Choose Your Path</h2>
+            <p class="text-xl text-gray-600">Different experiences for different needs</p>
+          </div>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="user-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 text-center hover:shadow-xl transition-all duration-300">
+              <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Students</h3>
+              <p class="text-gray-600">
+                Discover clubs, events, and opportunities. Build your profile and connect with like-minded peers.
+              </p>
+            </div>
+            <div class="user-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 text-center hover:shadow-xl transition-all duration-300">
+              <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Clubs</h3>
+              <p class="text-gray-600">
+                Manage members, organize events, and grow your community with powerful tools and analytics.
+              </p>
+            </div>
+            <div class="user-card bg-white p-8 rounded-2xl shadow-lg border border-gray-100 text-center hover:shadow-xl transition-all duration-300">
+              <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Admins</h3>
+              <p class="text-gray-600">
+                Oversee campus activities, manage policies, and gain insights into student engagement.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16 animate-on-scroll opacity-0">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Student Features</h2>
+            <p class="text-xl text-gray-600">Everything you need to thrive on campus</p>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="feature-card bg-gradient-to-br from-blue-600 to-purple-600 p-8 rounded-2xl shadow-lg text-left transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 0ms;">
+                <div class="icon-container w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300">
+                    <span class="text-3xl text-white">👤</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Smart Profile</h3>
+                <p class="text-blue-100">AI-powered profile that highlights your skills and interests to find the best opportunities.</p>
+            </div>
+
+            <div class="feature-card bg-gradient-to-br from-blue-600 to-purple-600 p-8 rounded-2xl shadow-lg text-left transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 100ms;">
+                <div class="icon-container w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300">
+                    <span class="text-3xl text-white">🔍</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Club Discovery</h3>
+                <p class="text-blue-100">Find clubs that match your passions and career goals with smart recommendations.</p>
+            </div>
+
+            <div class="feature-card bg-gradient-to-br from-blue-600 to-purple-600 p-8 rounded-2xl shadow-lg text-left transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 200ms;">
+                <div class="icon-container w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300">
+                    <span class="text-3xl text-white">📅</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Event Dashboard</h3>
+                <p class="text-blue-100">Never miss important campus events, workshops, and deadlines again.</p>
+            </div>
+
+            <div class="feature-card bg-gradient-to-br from-blue-600 to-purple-600 p-8 rounded-2xl shadow-lg text-left transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 300ms;">
+                <div class="icon-container w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300">
+                    <span class="text-3xl text-white">🤝</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Networking Hub</h3>
+                <p class="text-blue-100">Connect with students, alumni, and faculty to build your professional network.</p>
+            </div>
+
+            <div class="feature-card bg-gradient-to-br from-blue-600 to-purple-600 p-8 rounded-2xl shadow-lg text-left transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 400ms;">
+                <div class="icon-container w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300">
+                    <span class="text-3xl text-white">📈</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Skill Tracking</h3>
+                <p class="text-blue-100">Monitor your growth, earn badges for achievements, and showcase your skills.</p>
+            </div>
+
+            <div class="feature-card bg-gradient-to-br from-blue-600 to-purple-600 p-8 rounded-2xl shadow-lg text-left transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 500ms;">
+                <div class="icon-container w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-6 transition-transform duration-300">
+                    <span class="text-3xl text-white">🚀</span>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-4">Project Collaboration</h3>
+                <p class="text-blue-100">Work together seamlessly on academic and personal projects with integrated tools.</p>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="animate-on-scroll opacity-0">
+              <div class="bg-gradient-to-br from-purple-100 to-pink-100 p-8 rounded-2xl">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                  <div class="flex items-center justify-between mb-4">
+                    <h4 class="font-bold text-gray-900">Club Dashboard</h4>
+                    <div class="flex space-x-2">
+                      <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                      <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                      <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                    </div>
+                  </div>
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                      <span class="text-sm text-gray-700">Active Members</span>
+                      <span class="font-bold text-blue-600">247</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                      <span class="text-sm text-gray-700">Upcoming Events</span>
+                      <span class="font-bold text-green-600">5</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
+                      <span class="text-sm text-gray-700">Engagement Rate</span>
+                      <span class="font-bold text-purple-600">89%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="animate-on-scroll opacity-0">
+              <h2 class="text-4xl font-bold text-gray-900 mb-6">Powerful Club Management</h2>
+              <div class="space-y-4">
+                <div class="flex items-center space-x-3 animate-on-scroll opacity-0" style="animation-delay: 0ms;">
+                  <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                  </div>
+                  <span class="text-gray-700">Member management and communication tools</span>
+                </div>
+                <div class="flex items-center space-x-3 animate-on-scroll opacity-0" style="animation-delay: 100ms;">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                      <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700">Highly Secure and Private </span>
+                </div>
+                <div class="flex items-center space-x-3 animate-on-scroll opacity-0" style="animation-delay: 200ms;">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                      <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700">Directly Request to Join Clubs, Events</span>
+                </div>
+                <div class="flex items-center space-x-3 animate-on-scroll opacity-0" style="animation-delay: 300ms;">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                      <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700">Live Chat Communication With Faculty , Club Members</span>
+                </div>
+                <div class="flex items-center space-x-3 animate-on-scroll opacity-0" style="animation-delay: 400ms;">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                      <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700">Automated notifications and reminders</span>
+                </div>
+                <div class="flex items-center space-x-3 animate-on-scroll opacity-0" style="animation-delay: 500ms;">
+                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                      <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <span class="text-gray-700">Dynamic Creation Profile Of Student And Members</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-20 bg-gray-50">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 animate-on-scroll opacity-0">
+                      <h2 class="text-4xl font-bold text-gray-900 mb-4">Platform Features</h2>
+                      <p class="text-xl text-gray-600">Built for the modern campus experience</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                      <div class="interactive-icon-card text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 0ms;">
+                            <div class="text-4xl mb-4 hover:scale-110 transition-transform duration-300">🔍</div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">Smart Search</h3>
+                            <p class="text-gray-600 text-sm">AI-powered search across all campus activities</p>
+                      </div>
+                      <div class="interactive-icon-card text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 50ms;">
+                            <div class="text-4xl mb-4 hover:scale-110 transition-transform duration-300">🔔</div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">Real-time Notifications</h3>
+                            <p class="text-gray-600 text-sm">Stay updated with personalized alerts</p>
+                      </div>
+                      <div class="interactive-icon-card text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 100ms;">
+                            <div class="text-4xl mb-4 hover:scale-110 transition-transform duration-300">🎮</div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">Gamification</h3>
+                            <p class="text-gray-600 text-sm">Earn points and badges for participation</p>
+                      </div>
+                      <div class="interactive-icon-card text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 150ms;">
+                            <div class="text-4xl mb-4 hover:scale-110 transition-transform duration-300">🔒</div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">Privacy Controls</h3>
+                            <p class="text-gray-600 text-sm">Full control over your data and visibility</p>
+                      </div>
+                      <div class="interactive-icon-card text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 200ms;">
+                            <div class="text-4xl mb-4 hover:scale-110 transition-transform duration-300">📱</div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">Mobile First</h3>
+                            <p class="text-gray-600 text-sm">Optimized for mobile and desktop use</p>
+                      </div>
+                      <div class="interactive-icon-card text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 250ms;">
+                            <div class="text-4xl mb-4 hover:scale-110 transition-transform duration-300">🏫</div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">Campus Integration</h3>
+                            <p class="text-gray-600 text-sm">Seamless integration with existing systems</p>
+                      </div>
+                      <div class="interactive-icon-card text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 300ms;">
+                            <div class="text-4xl mb-4 hover:scale-110 transition-transform duration-300">📊</div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">Analytics Dashboard</h3>
+                            <p class="text-gray-600 text-sm">Insights into your campus engagement</p>
+                      </div>
+                      <div class="interactive-icon-card text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 350ms;">
+                            <div class="text-4xl mb-4 hover:scale-110 transition-transform duration-300">💬</div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">24/7 Support</h3>
+                            <p class="text-gray-600 text-sm">Always here to help when you need us</p>
+                      </div>
+                </div>
+          </div>
+      </section>
+
+      <section class="py-20 bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-pulse"></div>
+            <div class="absolute bottom-0 right-0 w-1 h-full bg-gradient-to-t from-blue-400 via-purple-400 to-pink-400 animate-pulse"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 animate-on-scroll opacity-0">
+                <h2 class="text-4xl font-bold text-white mb-4">AI-Powered Intelligence</h2>
+                <p class="text-xl text-gray-300">The future of campus connectivity is here</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="ai-feature-card bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 0ms;">
+                    <div class="text-4xl mb-6">🧠</div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Smart Matching</h3>
+                    <p class="text-gray-300 leading-relaxed">AI connects you with the perfect clubs and opportunities based on your interests and goals</p>
+                </div>
+                <div class="ai-feature-card bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 200ms;">
+                    <div class="text-4xl mb-6">📈</div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Skill Analytics</h3>
+                    <p class="text-gray-300 leading-relaxed">Track your skill development and get personalized recommendations for growth</p>
+                </div>
+                <div class="ai-feature-card bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 hover:bg-white/20 transition-all duration-300 animate-on-scroll opacity-0" style="animation-delay: 400ms;">
+                    <div class="text-4xl mb-6">🤖</div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Project Collaboration</h3>
+                    <p class="text-gray-300 leading-relaxed">AI-powered project matching connects you with teammates and mentors</p>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 animate-on-scroll opacity-0">
+            Ready to Transform Your Campus Experience?
+          </h2>
+          <p class="text-xl text-gray-600 mb-8 animate-on-scroll opacity-0">
+            Join thousands of students and clubs already using Campus Connect
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center animate-on-scroll opacity-0">
+            <button class="glow-button bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-lg transition-all duration-300"onclick="window.location.href='SignUP_Login.html'">
+              Sign Up Now
+            </button>
+            <button class="border-2 border-purple-600 text-purple-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-purple-600 hover:text-white transition-all duration-300">
+              Explore Features
+            </button>
+          </div>
+        </div>
+      </section>
+      
+      <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid md:grid-cols-4 gap-8">
+            <div>
+              <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
+                Campus Connect
+              </div>
+              <p class="text-gray-400">Connecting campus communities through smart technology.</p>
+            </div>
+            <div>
+              <h4 class="font-bold mb-4">Product</h4>
+              <ul class="space-y-2 text-gray-400">
+                <li><a href="#" class="hover:text-white transition-colors">Features</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">API</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-bold mb-4">Company</h4>
+              <ul class="space-y-2 text-gray-400">
+                <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-bold mb-4">Connect</h4>
+              <div class="flex space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors hover:scale-110 transform duration-200">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors hover:scale-110 transform duration-200">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+            <p>&copy; 2025 Campus Connect. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const anime = window.anime;
+
+        // Navbar scroll animation
+        window.addEventListener("scroll", () => {
+          const navbar = document.getElementById("navbar");
+          if (navbar) {
+              if (window.scrollY > 50) {
+                  navbar.classList.add("scrolled");
+              } else {
+                  navbar.classList.remove("scrolled");
+              }
+          }
+        });
+
+        // Hero animations
+        anime({
+          targets: ".hero-title",
+          translateY: [-50, 0],
+          opacity: [0, 1],
+          duration: 1000,
+          easing: "easeOutExpo",
+        });
+
+        anime({
+          targets: ".hero-subtitle",
+          translateY: [30, 0],
+          opacity: [0, 1],
+          duration: 1000,
+          delay: 300,
+          easing: "easeOutExpo",
+        });
+
+        anime({
+          targets: ".hero-buttons",
+          translateY: [30, 0],
+          opacity: [0, 1],
+          duration: 1000,
+          delay: 600,
+          easing: "easeOutExpo",
+        });
+
+        // Floating shapes animation
+        anime({
+          targets: ".floating-shape",
+          translateY: [-20, 20],
+          rotate: [0, 360],
+          duration: 4000,
+          loop: true,
+          direction: "alternate",
+          easing: "easeInOutSine",
+        });
+
+        // User types card hover animations
+        document.querySelectorAll(".user-card").forEach((card) => {
+          card.addEventListener("mouseenter", () => {
+            anime({
+              targets: card,
+              scale: 1.05,
+              boxShadow: "0 20px 40px rgba(0, 255, 255, 0.3)",
+              duration: 300,
+              easing: "easeOutExpo",
+            });
+          });
+
+          card.addEventListener("mouseleave", () => {
+            anime({
+              targets: card,
+              scale: 1,
+              boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
+              duration: 300,
+              easing: "easeOutExpo",
+            });
+          });
+        });
+
+        // Student Feature Card Hover Animation
+        document.querySelectorAll(".feature-card").forEach((card) => {
+            const icon = card.querySelector('.icon-container');
+
+            card.addEventListener("mouseenter", () => {
+                anime({
+                    targets: card,
+                    translateY: -10,
+                    scale: 1.03,
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                    duration: 300,
+                    easing: "easeOutExpo",
+                });
+                if (icon) {
+                    anime({
+                        targets: icon,
+                        scale: 1.1,
+                        rotate: 10,
+                        duration: 300,
+                        easing: 'easeOutExpo'
+                    });
+                }
+            });
+
+            card.addEventListener("mouseleave", () => {
+                anime({
+                    targets: card,
+                    translateY: 0,
+                    scale: 1,
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
+                    duration: 300,
+                    easing: "easeOutExpo",
+                });
+                if (icon) {
+                    anime({
+                        targets: icon,
+                        scale: 1,
+                        rotate: 0,
+                        duration: 300,
+                        easing: 'easeOutExpo'
+                    });
+                }
+            });
+        });
+
+
+        // Scroll animations
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              anime({
+                targets: entry.target,
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 800,
+                easing: "easeOutExpo",
+              });
+              observer.unobserve(entry.target); 
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll(".animate-on-scroll").forEach((el) => {
+          observer.observe(el);
+        });
+
+        // Button glow animation
+        document.querySelectorAll(".glow-button").forEach((button) => {
+          button.addEventListener("mouseenter", () => {
+            anime({
+              targets: button,
+              boxShadow: "0 0 30px rgba(0, 255, 255, 0.8)",
+              duration: 300,
+              easing: "easeOutExpo",
+            });
+          });
+
+          button.addEventListener("mouseleave", () => {
+            anime({
+              targets: button,
+              boxShadow: "0 0 10px rgba(0, 255, 255, 0.3)",
+              duration: 300,
+              easing: "easeOutExpo",
+            });
+          });
+        });
+      });
+    </script>
+</body>
+</html>
