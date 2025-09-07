@@ -14,14 +14,14 @@
   />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <style>
-    /* root and base styles (same as your original layout) */
+   
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
     :root {
-      /* variables */ /* light and dark themes */
+      
       --light-bg: #f8fafc;
       --light-sidebar-bg: #ffffff;
       --light-card-bg: #ffffff;
@@ -80,7 +80,7 @@
       --shadow: var(--light-shadow);
     }
 
-    /* Scrollbar */
+    
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -95,7 +95,7 @@
       background: var(--text-muted, var(--light-text-muted));
     }
 
-    /* Sidebar */
+    
     .sidebar {
       width: 260px;
       flex-shrink: 0;
@@ -236,7 +236,7 @@
       text-align: left;
     }
 
-    /* Main area */
+    
     .main-container {
       flex-grow: 1;
       display: flex;
@@ -304,7 +304,7 @@
       border-color: var(--primary-blue);
     }
 
-    /* Tabs & filters */
+    
     .filters-and-tabs {
       display: flex;
       justify-content: space-between;
@@ -352,7 +352,7 @@
       border-color: var(--primary-blue);
     }
 
-    /* Cards container */
+    
     .cards-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -437,7 +437,7 @@
       color: var(--accent-green);
     }
 
-    /* Right sidebar */
+   
     .right-sidebar {
       flex-grow: 1;
       overflow-y: auto;
@@ -539,7 +539,7 @@
       color: var(--text-muted, var(--light-text-muted));
     }
 
-    /* Entrance animations */
+    
     .sidebar,
     .main-header,
     .main-content,
@@ -547,7 +547,7 @@
       opacity: 0;
     }
 
-    /* Responsive */
+   
     @media (max-width: 1200px) {
       .right-sidebar {
         display: none;
@@ -596,7 +596,7 @@
       }
     }
 
-    /* Floating Action Button */
+   
     .fab {
       position: fixed;
       bottom: 24px;
@@ -620,7 +620,7 @@
       background-color: var(--primary-blue-dark);
     }
 
-    /* Modal Form */
+    
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -683,7 +683,7 @@
     .hidden {
       display: none;
     }
-    /* Accept/Reject Buttons */
+    
     .accept-btn {
       background-color: var(--accent-green);
       color: white;
@@ -765,12 +765,12 @@
     </main>
   </div>
 
-  <!-- Floating Action Button -->
+  
   <button class="fab" id="fab" title="Create New">
     <i class="fa-solid fa-plus"></i>
   </button>
 
-  <!-- Modal Overlay -->
+  
   <div id="modal-overlay" class="modal-overlay hidden">
     <div class="modal">
       <h2>Create New Post</h2>
@@ -1030,7 +1030,7 @@
       html += "</div>";
       tabContent.innerHTML = html;
 
-      // Entrance animation
+      
       anime({
         targets: ".card",
         translateY: [20, 0],
@@ -1065,7 +1065,7 @@
 
     searchInput.addEventListener("input", () => renderTab(currentTab));
 
-    // Sidebar toggle
+   
     sidebarToggle.addEventListener("click", () => {
       sidebar.classList.toggle("collapsed");
       sidebarToggle
@@ -1076,7 +1076,7 @@
         .classList.toggle("fa-chevron-left");
     });
 
-    // Theme toggle
+    
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
       body.setAttribute("data-theme", savedTheme);
@@ -1096,7 +1096,7 @@
       }
     });
 
-    // Fab & modal
+    
     fab.addEventListener("click", () => modalOverlay.classList.remove("hidden"));
     closeModal.addEventListener("click", () => modalOverlay.classList.add("hidden"));
 
@@ -1116,7 +1116,7 @@
 
       data[type].unshift({ title, desc, meta, interest, skills, icon });
       modalOverlay.classList.add("hidden");
-      // Reset fields
+      
       document.querySelectorAll("#modal-overlay input, #modal-overlay textarea, #modal-overlay select").forEach(
         (el) => (el.value = "")
       );
@@ -1127,7 +1127,7 @@
         .click();
     });
 
-    // Entrance animation
+    
     function initEntranceAnimations() {
       anime
         .timeline({ easing: "easeOutExpo" })
@@ -1169,7 +1169,7 @@
   const addPostSection = document.getElementById('add-post-container');
 
   showRequestsBtn.addEventListener('click', function (e) {
-    e.preventDefault(); // Prevent jump
+    e.preventDefault(); 
     requestSection.style.display = 'block';
     addPostSection.style.display = 'none';
   });

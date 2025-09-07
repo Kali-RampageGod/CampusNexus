@@ -9,7 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
   <style>
             :root {
-            /* Light Theme (Default) */
+           
             --bg-primary: #f8fafc;
             --bg-secondary: #ffffff;
             --bg-glass: rgba(255, 255, 255, 0.7);
@@ -28,7 +28,7 @@
         }
 
         html.dark {
-            /* Dark Theme */
+            
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
             --bg-glass: rgba(30, 41, 59, 0.7);
@@ -50,7 +50,7 @@
             transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
         }
         
-        /* --- Sidebar --- */
+        
         .sidebar {
             width: 280px;
             background: var(--bg-glass);
@@ -76,13 +76,13 @@
         #theme-switcher i { transition: transform 0.2s ease-out; }
         #theme-switcher i:hover { transform: scale(1.2); color: var(--primary-blue); }
 
-        /* --- Main Content --- */
+       
         .main { flex: 1; display: flex; gap: 24px; padding: 24px; overflow: hidden; }
         .main-left, .main-right { display: flex; flex-direction: column; gap: 24px; }
         .main-left { flex: 3; overflow-y: auto; padding-right: 12px; }
         .main-right { flex: 1; }
 
-        /* Profile Header */
+       
         .profile-header {
             background: var(--bg-secondary); border-radius: 16px; padding: 24px; display: flex;
             gap: 24px; align-items: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
@@ -106,7 +106,7 @@
         }
         .edit-profile-btn:hover { background: var(--primary-blue-dark); box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
-        /* Profile Stats Bar & Activity Cards with Spotlight Effect */
+       
         .stat-item, #tab-content .card {
             position: relative;
             overflow: hidden;
@@ -136,7 +136,7 @@
         .stat-item .number { font-size: 24px; font-weight: 700; color: var(--primary-blue); }
         .stat-item .label { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
 
-        /* Profile Section */
+       
         .profile-section { background: var(--bg-secondary); padding: 24px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
         .profile-section h2 { font-size: 20px; font-weight: 600; margin-bottom: 16px; }
         .skills-container { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -147,7 +147,7 @@
         html.dark .skill-tag { color: var(--primary-blue-light); }
         .skill-tag:hover { transform: scale(1.05); background-color: var(--primary-blue); color: var(--white); }
 
-        /* Gooey Tabs (Unchanged) */
+      
         .tabs-container { padding: 8px; background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 30px; box-shadow: var(--shadow-sm); filter: url('#gooey-effect'); }
         .tabs { position: relative; display: flex; align-items: center; }
         .tab { padding: 10px 24px; font-weight: 600; color: var(--text-secondary); cursor: pointer; z-index: 2; transition: color 0.4s ease; }
@@ -161,7 +161,7 @@
         #tab-content .card-title { font-weight: 600; }
         #tab-content .card-meta { font-size: 13px; color: var(--text-muted); }
 
-        /* Widgets & Scrollbar */
+        
         .widget { background: var(--bg-glass); backdrop-filter: blur(14px); padding: 20px; border-radius: 16px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
         .main-left::-webkit-scrollbar { width: 6px; }
         .main-left::-webkit-scrollbar-track { background: transparent; }
@@ -169,7 +169,7 @@
   </style>
 </head>
 <body>
-  <!-- Gooey Filter -->
+  
   <svg style="position: absolute; width: 0; height: 0;">
     <defs>
       <filter id="gooey-effect">
@@ -185,7 +185,7 @@
     </defs>
   </svg>
 
-  <!-- Sidebar -->
+  
   <div class="sidebar">
     <div class="logo">CampusConnect</div>
     <nav>
@@ -202,10 +202,10 @@
     </div>
   </div>
 
-  <!-- Main -->
+  
   <main class="main">
     <div class="main-left">
-      <!-- Teacher Header -->
+      
       <div class="profile-header">
         <div class="avatar-container">
           <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg" alt="Dr. Aditi Sharma" class="profile-avatar">
@@ -218,7 +218,7 @@
         <button class="edit-profile-btn"><i class="fas fa-pen"></i> Edit Profile</button>
       </div>
 
-      <!-- Stats -->
+      
       <div class="stats-bar">
         <div class="stat-item"><div class="number">15</div><div class="label">Years Experience</div></div>
         <div class="stat-item"><div class="number">24</div><div class="label">Research Papers</div></div>
@@ -226,7 +226,7 @@
         <div class="stat-item"><div class="number">5</div><div class="label">PhD Scholars</div></div>
       </div>
 
-      <!-- Skills -->
+     
       <div class="profile-section">
         <h2>Expertise</h2>
         <div class="skills-container">
@@ -238,7 +238,7 @@
         </div>
       </div>
 
-      <!-- Activities -->
+     
       <div class="profile-section">
         <h2>Academic Contributions</h2>
         <div class="tabs-container">
@@ -253,7 +253,7 @@
       </div>
     </div>
 
-    <!-- Right -->
+    
     <div class="main-right">
       <div class="widget">
         <h3>Student Feedback</h3>
@@ -268,7 +268,7 @@
 
   <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Theme Switcher
+    
     const themeSwitcher = document.getElementById('theme-switcher');
     const doc = document.documentElement;
     const setTheme = (theme) => {
@@ -278,7 +278,7 @@
     themeSwitcher.addEventListener('click', () => setTheme(doc.classList.contains('dark') ? 'light' : 'dark'));
     setTheme(localStorage.getItem('theme') || 'light');
 
-    // Tabs
+    
     const tabsContainer = document.querySelector('.tabs');
     const indicator = document.querySelector('.tab-indicator');
     const hoverBubble = document.querySelector('.hover-bubble');

@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
     <style>
         :root {
-            /* Light Theme (Default) */
+            
             --bg-primary: #f8fafc;
             --bg-secondary: #ffffff;
             --bg-glass: rgba(255, 255, 255, 0.7);
@@ -28,7 +28,7 @@
         }
 
         html.dark {
-            /* Dark Theme */
+           
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
             --bg-glass: rgba(30, 41, 59, 0.7);
@@ -50,7 +50,7 @@
             transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
         }
         
-        /* --- Sidebar --- */
+       
         .sidebar {
             width: 280px;
             background: var(--bg-glass);
@@ -76,13 +76,13 @@
         #theme-switcher i { transition: transform 0.2s ease-out; }
         #theme-switcher i:hover { transform: scale(1.2); color: var(--primary-blue); }
 
-        /* --- Main Content --- */
+      
         .main { flex: 1; display: flex; gap: 24px; padding: 24px; overflow: hidden; }
         .main-left, .main-right { display: flex; flex-direction: column; gap: 24px; }
         .main-left { flex: 3; overflow-y: auto; padding-right: 12px; }
         .main-right { flex: 1; }
 
-        /* Profile Header */
+       
         .profile-header {
             background: var(--bg-secondary); border-radius: 16px; padding: 24px; display: flex;
             gap: 24px; align-items: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
@@ -106,7 +106,7 @@
         }
         .edit-profile-btn:hover { background: var(--primary-blue-dark); box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
-        /* Profile Stats Bar & Activity Cards with Spotlight Effect */
+        
         .stat-item, #tab-content .card {
             position: relative;
             overflow: hidden;
@@ -281,7 +281,7 @@
             anime.set(hoverBubble, { left: e.clientX - rect.left - (hoverBubble.offsetWidth / 2) });
         });
 
-        // --- TAB & CONTENT LOGIC ---
+        
         const tabContent = document.getElementById("tab-content");
         let currentTab = "clubs";
 
@@ -301,7 +301,7 @@
         });
         moveIndicator(document.querySelector('.tab.active'));
 
-        // --- MOCK DATA & RENDERING ---
+        
         const activityData = {
             clubs: [{ title: "AI & Robotics Club", meta: "Member since 2024", icon: "fa-robot" }, { title: "Web Developers Society", meta: "Core Committee", icon: "fa-code" }],
             projects: [{ title: "Campus Navigation App", meta: "Role: Lead Developer", icon: "fa-map-signs" }, { title: "AI Chatbot for Admissions", meta: "Role: Python Developer", icon: "fa-comment-dots" }],

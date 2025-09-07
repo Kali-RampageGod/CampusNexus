@@ -135,7 +135,7 @@ select:hover, select:focus {
   <canvas id="bg"></canvas>
 
   <div class="container">
-    <!-- Left Section -->
+    
     <div class="left">
       <h1>Connect. Collaborate. Create.</h1>
       <p>Join a community of innovative students building the future together</p>
@@ -148,9 +148,9 @@ select:hover, select:focus {
       </ul>
     </div>
 
-    <!-- Right Section (Form) -->
+   
     <div class="form-card">
-      <!-- Signup Form -->
+      
       <form id="signupForm" class="form active">
         <h2>Create Your Account</h2>
         <p>Join the elite <b>CampusNexus</b> community</p>
@@ -190,7 +190,7 @@ select:hover, select:focus {
         </div>
       </form>
 
-      <!-- Login Form -->
+      
       <form id="loginForm" class="form">
         <h2>Welcome Back</h2>
         <p>Login to <b>CampusNexus</b></p>
@@ -221,7 +221,7 @@ select:hover, select:focus {
   </div>
 
   <script>
-    // Particle Background
+   
     const canvas = document.getElementById("bg");
     const ctx = canvas.getContext("2d");
     let particles = [];
@@ -290,13 +290,13 @@ select:hover, select:focus {
     initParticles();
     animate();
 
-    // Toggle Forms
+   
     function toggleForms() {
       document.getElementById("signupForm").classList.toggle("active");
       document.getElementById("loginForm").classList.toggle("active");
     }
 
-    // Static Signup Handler
+   
     document.getElementById("signupForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
@@ -312,7 +312,7 @@ select:hover, select:focus {
       toggleForms();
     });
 
-    // Static Login Handler
+    
     document.getElementById("loginForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
@@ -320,14 +320,14 @@ select:hover, select:focus {
       const password = form.password.value;
      const role=form.role.value;
      console.log(role);
-      // Static demo credentials
+      
       const demoEmail = "user@example.com";
       const demoPassword = "123456";
 
       if (email === demoEmail && password === demoPassword&&role==="student") {
         alert("Login successful!");
         window.location.href="dashboard.html";
-        // Redirect or load dashboard here
+       
       } else if(email === demoEmail && password === demoPassword&&role==="teacher"){
 window.location.href="Teacherdashboard.html";
       }

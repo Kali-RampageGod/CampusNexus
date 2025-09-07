@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CampusChat — Discover & Join</title>
   <style>
-    /* Reset */
+   
     *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}
     :root{
       --bg1:#f7fbff; --accent:#4f46e5; --muted:#6b7280; --card:#ffffff; --glass:rgba(255,255,255,0.6);
@@ -19,7 +19,7 @@
       -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
     }
 
-    /* Moving soft shapes background */
+    
     .hero-bg{
       position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;
     }
@@ -31,17 +31,17 @@
     .b3{background:radial-gradient(circle at 50% 50%, #fb7185,#f97316 30%, transparent 60%);left:20%;bottom:-5%;animation-duration:15s}
     @keyframes float{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.03)}100%{transform:translateY(0) scale(1)}}
 
-    /* Container */
+   
     .container{width:1200px;max-width:100%;display:grid;grid-template-columns:360px 1fr;gap:22px}
 
-    /* Left panel - hero + features + participants */
+   
     .left{background:linear-gradient(180deg,rgba(255,255,255,0.8),var(--card));backdrop-filter:blur(8px);border-radius:16px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
     .brand{display:flex;gap:12px;align-items:center}
     .logo{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;box-shadow:0 6px 18px rgba(99,102,241,0.25)}
     .title{font-size:18px;font-weight:700;color:#0f172a}
     .subtitle{font-size:13px;color:var(--muted)}
 
-    /* Feature catalogue */
+   
     .features{margin-top:6px}
     .feature-track{display:flex;gap:10px;overflow:hidden;padding-bottom:6px}
     .feature{min-width:220px;background:linear-gradient(180deg,white, #fbfdff);border-radius:12px;padding:12px;box-shadow:0 6px 20px rgba(2,6,23,0.04);transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s;cursor:pointer}
@@ -49,7 +49,7 @@
     .feature h4{font-size:14px;margin-bottom:6px}
     .feature p{font-size:12px;color:var(--muted)}
 
-    /* Participants */
+    
     .participants{margin-top:8px}
     .participants h3{font-size:13px;color:var(--muted);margin-bottom:8px}
     .user-list{display:flex;flex-direction:column;gap:8px}
@@ -60,7 +60,7 @@
     .name{font-weight:600}
     .role{font-size:12px;color:var(--muted)}
 
-    /* Right - chat pane */
+    
     .right{background:linear-gradient(180deg,var(--card),#fff);border-radius:16px;padding:14px;display:flex;flex-direction:column;min-height:600px;box-shadow:var(--shadow)}
     .chat-header{display:flex;align-items:center;justify-content:space-between;padding:6px 4px;border-bottom:1px solid #f1f5f9}
     .chat-title{display:flex;gap:12px;align-items:center}
@@ -82,21 +82,21 @@
     button:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(79,70,229,0.12)}
     .btn-ghost{background:transparent;color:var(--accent);border:1px solid rgba(79,70,229,0.12)}
 
-    /* Typing indicator */
+    
     .typing{display:flex;gap:6px;align-items:center}
     .dot{width:7px;height:7px;border-radius:50%;background:#c7c7c7;animation:bounce 1s infinite}
     .dot:nth-child(2){animation-delay:.12s}
     .dot:nth-child(3){animation-delay:.24s}
     @keyframes bounce{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
 
-    /* Modal for Join */
+    
     .modal{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.35);z-index:40;}
     .modal-card{background:var(--card);padding:18px;border-radius:12px;width:420px;box-shadow:0 30px 80px rgba(2,6,23,0.16)}
     .field{display:flex;flex-direction:column;margin-bottom:10px}
     label{font-size:13px;color:var(--muted);margin-bottom:6px}
     input[type=text],select,textarea{padding:10px;border-radius:8px;border:1px solid #e6edf7;outline:none}
 
-    /* small screens */
+    
     @media (max-width:920px){.container{grid-template-columns:1fr;}.left{order:2}.right{order:1;min-height:520px}}
 
   </style>
@@ -147,7 +147,7 @@
       <div class="participants">
         <h3>Participants</h3>
         <div class="user-list" id="participantsList">
-          <!-- JS will populate -->
+          
         </div>
         <div style="display:flex;gap:8px;margin-top:10px">
           <button class="btn-ghost" id="openJoin">Join Club</button>
@@ -177,7 +177,7 @@
       </div>
 
       <div id="messages" class="messages" aria-live="polite" aria-atomic>
-        <!-- messages appended here -->
+        
       </div>
 
       <div class="input-area">
@@ -198,7 +198,7 @@
 
   </div>
 
-  <!-- Modal -->
+  
   <div id="modal" class="modal" style="display:none">
     <div class="modal-card">
       <h3 style="margin-bottom:10px">Join a Club</h3>
@@ -213,7 +213,7 @@
   </div>
 
   <script>
-    /* Demo participants data */
+    
     const participants = [
       {id:1,name:'Aisha Patel',role:'student',bio:'CS • Interested in AI'},
       {id:2,name:'Dr. R. Mehta',role:'faculty',bio:'Associate Prof, EE'},
@@ -289,19 +289,19 @@
 
     function scrollBottom(){messagesEl.scrollTop = messagesEl.scrollHeight}
 
-    /* sending */
+    
     sendBtn.addEventListener('click',()=>{
       const text = msgInput.value.trim(); if(!text) return;
       const role = roleSelect.value; const target = targetSelect.value;
       appendMessage('me',role,target,text); msgInput.value='';
-      // simulate reply for demo
+      
       setTimeout(()=>simulateReply(role,target,text),800 + Math.random()*1200);
     });
 
     msgInput.addEventListener('keydown',e=>{if(e.key==='Enter' && !e.shiftKey){e.preventDefault();sendBtn.click();}})
 
     function simulateReply(role,target,text){
-      // Simple heuristic replies
+      
       const replies = {
         student:["I'd love to join that.","When is the next meeting?","Can you share more details about roles?"],
         faculty:["Thanks for reaching out. Please email me.","That's a good initiative. Let's discuss.","I'll add this to the next lecture notes."] ,
@@ -313,13 +313,13 @@
     }
 
     function randomParticipantName(role){
-      // return a participant matching role or random
+     
       const filtered = participants.filter(p=>p.role===role || (role==='leader' && p.role==='leader'));
       if(filtered.length) return filtered[Math.floor(Math.random()*filtered.length)].name;
       return participants[Math.floor(Math.random()*participants.length)].name;
     }
 
-    /* modal */
+    
     openJoin.addEventListener('click',()=>{modal.style.display='flex'});
     closeModal.addEventListener('click',()=>{modal.style.display='none'});
     submitJoin.addEventListener('click',()=>{
@@ -333,10 +333,10 @@
 
     clearBtn.addEventListener('click',()=>{if(confirm('Clear local chat history?')){chat=[];saveChat();renderMessages();}})
 
-    /* initial render */
+    
     renderParticipants();renderMessages();scrollBottom();
 
-    /* Feature carousel auto-scroll */
+    
     const track = document.getElementById('featureTrack');
     let carouselId = null;
     function startCarousel(){carouselId = setInterval(()=>{track.scrollBy({left:230,behavior:'smooth'}); if(track.scrollLeft + track.clientWidth >= track.scrollWidth-2) track.scrollTo({left:0,behavior:'smooth'})},3000)}
@@ -344,14 +344,14 @@
     function resumeCarousel(){ pauseCarousel(); startCarousel() }
     startCarousel();
 
-    /* small UX: show typing indicator when input focused */
+    
     msgInput.addEventListener('focus',()=>{const el=document.createElement('div');el.className='msg';el.id='typingInd';el.innerHTML='<div class="meta"><strong>Typing…</strong></div><div class="text"><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>' ;messagesEl.appendChild(el);scrollBottom();});
     msgInput.addEventListener('blur',()=>{const t=document.getElementById('typingInd'); if(t) t.remove();});
 
-    /* helpful keyboard shortcuts */
+   
     window.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey) && e.key==='k'){e.preventDefault();msgInput.focus();}})
 
-    /* onboarding notice */
+   
     if(!chat.length) appendSystemMessage('Welcome to CampusChat — select your role on the top-right, type a message and press Send. Use "Join Club" to request membership. This demo stores chat locally only.')
 
   </script>

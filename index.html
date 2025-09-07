@@ -13,7 +13,7 @@
           backdrop-filter: blur(10px);
           box-shadow: 0 1px 20px rgba(0, 0, 0, 0.1);
         }
-        /* Initial state for scroll animations */
+       
         .animate-on-scroll {
             opacity: 0;
         }
@@ -456,7 +456,7 @@
           easing: "easeOutExpo",
         });
 
-        // Floating shapes animation
+        
         anime({
           targets: ".floating-shape",
           translateY: [-20, 20],
@@ -467,7 +467,7 @@
           easing: "easeInOutSine",
         });
 
-        // User types card hover animations
+       
         document.querySelectorAll(".user-card").forEach((card) => {
           card.addEventListener("mouseenter", () => {
             anime({
@@ -490,7 +490,7 @@
           });
         });
 
-        // Student Feature Card Hover Animation
+        
         document.querySelectorAll(".feature-card").forEach((card) => {
             const icon = card.querySelector('.icon-container');
 
@@ -536,7 +536,7 @@
         });
 
 
-        // Scroll animations
+        
         const observerOptions = {
           threshold: 0.1,
           rootMargin: "0px 0px -50px 0px",
@@ -561,7 +561,7 @@
           observer.observe(el);
         });
 
-        // Button glow animation
+        
         document.querySelectorAll(".glow-button").forEach((button) => {
           button.addEventListener("mouseenter", () => {
             anime({

@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <title>Upgraded Dashboard | CampusConnect</title>
     <style>
-        /* --- RESET & BASE STYLES --- */
+       
         * {
             margin: 0;
             padding: 0;
@@ -75,13 +75,12 @@
             --shadow: var(--light-shadow);
         }
 
-        /* --- SCROLLBAR --- */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border, var(--light-border)); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-muted, var(--light-text-muted)); }
 
-        /* --- SIDEBAR --- */
+        
         .sidebar {
             width: 260px;
             flex-shrink: 0;
@@ -134,10 +133,10 @@
             margin-bottom: 4px;
             transition: all 0.2s ease;
             white-space: nowrap;
-            position: relative; /* For active indicator */
+            position: relative; 
         }
         
-        /* NEW: Active link indicator */
+       
         .sidebar nav a::before {
             content: '';
             position: absolute;
@@ -160,7 +159,7 @@
 
         .logout-btn { background: none; border: none; width: 100%; text-align: left; }
         
-        /* --- MAIN CONTENT AREA --- */
+      
         .main-container { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; padding: 24px; }
         .main-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-shrink: 0; }
         .main-header h1 { font-size: 28px; font-weight: 800; color: var(--text-primary, var(--light-text-primary)); }
@@ -178,7 +177,7 @@
         .main-content { flex-grow: 3; overflow-y: auto; padding-right: 12px; }
         .right-sidebar { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 24px; padding-right: 12px; }
 
-        /* TABS & FILTERS */
+        
         .filters-and-tabs { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 16px; }
         .tabs { display: flex; gap: 8px; }
         .tab { padding: 8px 16px; cursor: pointer; font-weight: 600; font-size: 14px; color: var(--text-muted, var(--light-text-muted)); border-radius: 8px; transition: all 0.2s ease; position: relative; }
@@ -188,7 +187,7 @@
         .filters select:hover { transform: scale(1.05); }
         .filters select:focus { outline: none; border-color: var(--primary-blue); }
 
-        /* CONTENT CARDS */
+        
         .cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .card { background: var(--card-bg, var(--light-card-bg)); border: 1px solid var(--border, var(--light-border)); border-radius: 12px; padding: 20px; box-shadow: var(--shadow, var(--light-shadow)); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; cursor: pointer; opacity: 0; /* For animation */ }
         .card:hover { transform: translateY(-5px); border-color: var(--primary-blue); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08); }
@@ -204,7 +203,7 @@
         .tag.interest { background-color: rgba(59, 130, 246, 0.1); color: var(--primary-blue); }
         .tag.skill { background-color: rgba(34, 197, 94, 0.1); color: var(--accent-green); }
 
-        /* RIGHT SIDEBAR WIDGETS */
+        
         .widget { background: var(--card-bg, var(--light-card-bg)); border: 1px solid var(--border, var(--light-border)); border-radius: 12px; padding: 20px; box-shadow: var(--shadow, var(--light-shadow)); }
         .widget-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
         .stats-list .stat-item { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
@@ -225,10 +224,10 @@
         .event-details p { font-size: 14px; font-weight: 600; }
         .event-details small { font-size: 12px; color: var(--text-muted, var(--light-text-muted)); }
         
-        /* Entrance Animations */
+       
         .sidebar, .main-header, .main-content, .right-sidebar { opacity: 0; }
 
-        /* RESPONSIVE */
+        
         @media (max-width: 1200px) { .right-sidebar { display: none; } }
         @media (max-width: 768px) {
             body { flex-direction: column; }
@@ -608,7 +607,7 @@
                 }
             });
 
-            // --- Animated Progress Bars ---
+            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -623,7 +622,7 @@
             
             document.querySelectorAll('.progress-bar').forEach(bar => observer.observe(bar));
 
-            // --- Entrance Animation ---
+           
             function initEntranceAnimation() {
                 const tl = anime.timeline({
                     easing: 'easeOutExpo',
@@ -648,7 +647,7 @@
                 }, '-=400');
             }
 
-            // Initial render & Animations
+           
             initEntranceAnimation();
             renderTab(currentTab);
         });
